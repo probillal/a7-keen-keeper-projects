@@ -1,7 +1,11 @@
+import Banner from "../Components/HomeItems/Banner";
+import Cards from "../Components/HomeItems/Cards";
+
 const HomePage = () => {
   return (
     <div>
-      <h2>This is Home Page</h2>
+      <Banner></Banner>
+      <Cards></Cards>
     </div>
   );
 };
