@@ -4,6 +4,7 @@ import { FaArchive, FaPhoneVolume } from "react-icons/fa";
 import { FiTrash2 } from "react-icons/fi";
 import { LuAlarmClock, LuMessageSquareMore } from "react-icons/lu";
 import { Link, useParams } from "react-router";
+import { toast } from "react-toastify";
 
 const friendsPromise = fetch("/friends.json").then((res) => res.json());
 
@@ -14,12 +15,29 @@ const FriendDetails = () => {
   console.log(id, "params");
   const expectedFriend = friends.find((friend) => friend.id == id);
   console.log(expectedFriend);
+
+  const handleInteraction = (type) => {
+    const newEntry = {
+      id: Date.now(),
+      type,
+      date: new Date().toLocaleDateString(),
+      title: `${type} with ${expectedFriend.name}`,
+    };
+
+    const existingTimeline = JSON.parse(localStorage.getItem("timeline")) || [];
+
+    const updatedTimeline = [newEntry, ...existingTimeline];
+
+    localStorage.setItem("timeline", JSON.stringify(updatedTimeline));
+
+    toast.success(`${type} added to timeline`);
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-6 bg-[#f5f7f6] min-h-screen">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Left Side */}
         <div className="space-y-4">
-          {/* Profile Card */}
           <div className="bg-white rounded-xl border border-gray-200 p-6 text-center shadow-sm">
             <img
               src={expectedFriend.picture}
@@ -49,17 +67,17 @@ const FriendDetails = () => {
           </div>
 
           <div className="space-y-3">
-            <Link className=" w-full bg-white border border-gray-200 rounded-lg py-4 flex items-center justify-center gap-2 hover:bg-gray-50 transition">
+            <Link className="w-full bg-white border border-gray-200 rounded-lg py-4 flex items-center justify-center gap-2 hover:bg-gray-50 transition">
               <LuAlarmClock size={18} />
               Snooze 2 Weeks
             </Link>
 
-            <Link className="btn w-full bg-white border border-gray-200 rounded-lg py-4 flex items-center justify-center gap-2 hover:bg-gray-50 transition">
+            <Link className="w-full bg-white border border-gray-200 rounded-lg py-4 flex items-center justify-center gap-2 hover:bg-gray-50 transition">
               <FaArchive size={18} />
               Archive
             </Link>
 
-            <Link className="btn w-full bg-white border border-red-100 rounded-lg py-4 flex items-center justify-center gap-2 text-red-500 hover:bg-red-50 transition">
+            <Link className="w-full bg-white border border-red-100 rounded-lg py-4 flex items-center justify-center gap-2 text-red-500 hover:bg-red-50 transition">
               <FiTrash2 size={18} />
               Delete
             </Link>
@@ -68,7 +86,6 @@ const FriendDetails = () => {
 
         {/* Right Side */}
         <div className="lg:col-span-2 space-y-5">
-          {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="bg-white rounded-xl border border-gray-200 p-6 text-center shadow-sm">
               <h2 className="text-5xl font-bold text-green-900">
@@ -92,7 +109,6 @@ const FriendDetails = () => {
             </div>
           </div>
 
-          {/* Goal Section */}
           <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-semibold text-green-900">
@@ -112,24 +128,35 @@ const FriendDetails = () => {
             </p>
           </div>
 
-          {/* Quick Check-In */}
           <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
             <h2 className="text-2xl font-semibold text-green-900">
               Quick Check-In
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-              <Link className="border border-gray-200 rounded-xl py-8 flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition">
+              <Link
+                to="/timeline"
+                onClick={() => handleInteraction("Call")}
+                className="border border-gray-200 rounded-xl py-8 flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition"
+              >
                 <FaPhoneVolume size={30} />
                 <span className="font-medium">Call</span>
               </Link>
 
-              <Link className="border border-gray-200 rounded-xl py-8 flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition">
+              <Link
+                to="/timeline"
+                onClick={() => handleInteraction("Text")}
+                className="border border-gray-200 rounded-xl py-8 flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition"
+              >
                 <LuMessageSquareMore size={30} />
                 <span className="font-medium">Text</span>
               </Link>
 
-              <Link className="border border-gray-200 rounded-xl py-8 flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition">
+              <Link
+                to="/timeline"
+                onClick={() => handleInteraction("Video")}
+                className="border border-gray-200 rounded-xl py-8 flex flex-col items-center justify-center gap-3 hover:bg-gray-50 transition"
+              >
                 <CiVideoOn size={30} />
                 <span className="font-medium">Video</span>
               </Link>
