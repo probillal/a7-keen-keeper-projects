@@ -1,16 +1,24 @@
-# React + Vite
+🧠 Project Name
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Keen Keeper – Friend Management App
 
-Currently, two official plugins are available:
+📌 Short Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Keen Keeper is a simple and modern friend management web application built with React. It helps users keep track of their friends, monitor last contact dates, and manage relationships by showing overdue contacts, tags, and status updates in an organized way.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+⚙️ Technologies Used
+* React.js
+* Vite
+* JavaScript (ES6+)
+* Tailwind CSS 
+* Git & GitHub
+* Vercel (Deployment)
+* JSON (for mock data handling)
+  
+✨ 3 Key Features
+1. Friend Tracking System
+* Track when you last contacted a friend and see who needs attention.
+2. Status & Reminder System
+* Automatically shows status like “overdue” based on days since last contact.
+3. Tag-based Organization
+* Add tags (e.g. college, close friend) to easily categorize your contacts.
