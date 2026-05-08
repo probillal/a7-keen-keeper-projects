@@ -31,7 +31,9 @@ const Stats = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-5">
-      <h2 className="text-5xl font-bold mb-10">Friendship Analytics</h2>
+      <h2 className="text-5xl text-green-600 font-bold mb-10">
+        Friendship Analytics
+      </h2>
 
       <div className="bg-white p-6 rounded-2xl shadow">
         <div className="w-full h-[400px]">
