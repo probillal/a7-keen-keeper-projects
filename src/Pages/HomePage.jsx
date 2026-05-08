@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Banner from "../Components/HomeItems/Banner";
 import Cards from "../Components/HomeItems/Cards";
 import Friends from "../Components/HomeItems/Friends";
@@ -7,7 +8,13 @@ const HomePage = () => {
     <div>
       <Banner></Banner>
       <Cards></Cards>
-      <Friends></Friends>
+      <Suspense
+        fallback={
+          <span className="loading loading-spinner text-success"></span>
+        }
+      >
+        <Friends></Friends>
+      </Suspense>
     </div>
   );
 };

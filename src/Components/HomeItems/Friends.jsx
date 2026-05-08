@@ -1,4 +1,4 @@
-import { use } from "react";
+import { Suspense, use } from "react";
 import Friend from "./Friend";
 
 const friendsPromise = fetch("/friends.json").then((res) => res.json());
