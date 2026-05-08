@@ -1,53 +1,82 @@
-// Timeline.jsx
-
 import { useEffect, useState } from "react";
-import { FaPhoneAlt } from "react-icons/fa";
-import { FiMessageSquare } from "react-icons/fi";
+import { FaPhoneVolume } from "react-icons/fa";
+import { LuMessageSquareMore } from "react-icons/lu";
 import { CiVideoOn } from "react-icons/ci";
 
-const TimeLine = () => {
+const Timeline = () => {
   const [timeline, setTimeline] = useState([]);
 
-  // load data from localStorage
-  useEffect(() => {
-    const savedData = JSON.parse(localStorage.getItem("timeline")) || [];
+  const [filter, setFilter] = useState("All");
 
-    setTimeline(savedData);
+  useEffect(() => {
+    const savedTimeline = JSON.parse(localStorage.getItem("timeline")) || [];
+
+    setTimeline(savedTimeline);
   }, []);
 
-  // icon function
   const getIcon = (type) => {
     if (type === "Call") {
-      return <FaPhoneAlt />;
+      return (
+        <div className="bg-yellow-100 p-3 rounded-full">
+          <FaPhoneVolume className="text-yellow-600 text-xl" />
+        </div>
+      );
     }
 
     if (type === "Text") {
-      return <FiMessageSquare />;
+      return (
+        <div className="bg-gray-100 p-3 rounded-full">
+          <LuMessageSquareMore className="text-gray-600 text-xl" />
+        </div>
+      );
     }
 
     if (type === "Video") {
-      return <CiVideoOn />;
+      return (
+        <div className="bg-blue-100 p-3 rounded-full">
+          <CiVideoOn className="text-blue-600 text-xl" />
+        </div>
+      );
     }
   };
 
-  return (
-    <div className="max-w-4xl mx-auto p-5">
-      <h2 className="text-4xl font-bold mb-8">Timeline</h2>
+  // filtering data
+  const filteredTimeline =
+    filter === "All"
+      ? timeline
+      : timeline.filter((item) => item.type === filter);
 
+  return (
+    <div className="max-w-5xl mx-auto p-5">
+      <h2 className="text-5xl font-bold mb-8">Timeline</h2>
+
+      {/* Filter */}
+      <select
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        className="select select-bordered w-full max-w-xs mb-8"
+      >
+        <option value="All">All</option>
+        <option value="Call">Call</option>
+        <option value="Text">Text</option>
+        <option value="Video">Video</option>
+      </select>
+
+      {/* Timeline Cards */}
       <div className="space-y-4">
-        {timeline.map((item) => (
+        {filteredTimeline.map((item) => (
           <div
             key={item.id}
-            className="border rounded-xl p-5 flex items-center gap-4"
+            className="bg-white border border-gray-200 rounded-xl p-5 flex items-center gap-4"
           >
-            <div className="bg-green-600 text-white p-3 rounded-full">
-              {getIcon(item.type)}
-            </div>
+            {getIcon(item.type)}
 
             <div>
-              <h2 className="font-bold">{item.title}</h2>
+              <h2 className="text-lg font-semibold text-green-900">
+                {item.title}
+              </h2>
 
-              <p className="text-gray-500">{item.date}</p>
+              <p className="text-gray-500 text-sm">{item.date}</p>
             </div>
           </div>
         ))}
@@ -56,4 +85,4 @@ const TimeLine = () => {
   );
 };
 
-export default TimeLine;
+export default Timeline;
